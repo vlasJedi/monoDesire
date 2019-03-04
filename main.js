@@ -2,7 +2,8 @@ requirejs.config({
 	//baseUrl: "modules/scripts",
 	paths: {
 		//"jquery": "https://code.jquery.com/jquery-3.3.1.slim.min",  // !!! Require JS automotically adds .JS
-        "moment": "node_modules/moment/moment"
+        "moment": "node_modules/moment/min/moment-with-locales" // if want parse with locales, need to use mament-witl-all-locales
+        // or use specifically selected locales
 	},
 	//If no baseUrl is explicitly set in the configuration, the default value will be the location of 
 	//the HTML page that loads require.js. If a data-main attribute is used, that path will become the baseUrl.
@@ -22,14 +23,18 @@ requirejs.config({
 //} );
 requirejs(["moment"],function( moment ){
 	//$(document).ready( function () {
-        var dateFromUser = prompt("Input your date","");
+        var dateFromUser = "26.06.1994";
         var parsingFormats = ["DD:MM:YYYY","YYYY:MM:DD","YYYY:MMM:DD"]; // it parser array which looks for matching, it parses all non alphabetic letters like seperator : and another such as * // / etc
-        var locales = ["fr","en"];
-        console.log("Date inputted by user is valid or not:"  + moment.utc(dateFromUser,parsingFormats)._isValid);
-		console.log("Formatted date is local time L, for instance: "  + moment(dateFromUser,parsingFormats,locales[0]).format("DD + MMM + YYYY:hh+Z"));
-        console.log("Formatted date is local time LL, for instance: "  + moment(dateFromUser,parsingFormats,locales[1]).format("DD + MMM + YYYY:hh+ZZ"));
-        console.log("Formatted date is local time LLL, for instance: "  + moment(dateFromUser,parsingFormats,locales[0]).format("DD + MMM + YYYY:hh+Z"));
-        console.log("Formatted date is local time LLLL, for instance: "  + moment(dateFromUser,parsingFormats,locales[1]).format("DD + MMM + YYYY:hh+Z"));
+        var locales = ["fr","en","us"];
+        console.log("Date inputted by user is valid or not:"  + moment(dateFromUser,parsingFormats)._isValid);
+        var moment_1 = moment(dateFromUser,parsingFormats,locales[0]);
+        console.log("Locale is: " + moment_1._locale._abbr + " and date is: " + moment_1.format("DD + MMM + YYYY:hh+ZZ"));
+        console.log("Locale is: " + moment_1._locale._abbr + " and date is: " + moment_1.format("LLLL"));
+        var simpleProm = new Promise(function(resolve,reject) {
+        	window.navigator.geolocation.getCurrentPosition(function(location){resolve(location);}	
+        	);
+        });
+        simpleProm.then(function(location){console.log(location)});
         /*var xhr = new XMLHttpRequest();
 		//xhr.withCredentials = true;
 		var request = {
