@@ -1,9 +1,10 @@
 requirejs.config({
-	//baseUrl: "modules/scripts",
+	//baseUrl: "modules/scripts", //base entry point to find requested modules
 	paths: {
-		//"jquery": "https://code.jquery.com/jquery-3.3.1.slim.min",  // !!! Require JS automotically adds .JS
-        "moment": "node_modules/moment/min/moment-with-locales" // if want parse with locales, need to use mament-witl-all-locales
-        // or use specifically selected locales
+		"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min",  // !!! Require JS automotically adds .JS
+		"returnName": "./scripts/returnName",
+		"alertHello": "./scripts/alertHello",
+		"moment":  "./node_modules/moment/min/moment-with-locales"
 	},
 	//If no baseUrl is explicitly set in the configuration, the default value will be the location of 
 	//the HTML page that loads require.js. If a data-main attribute is used, that path will become the baseUrl.
@@ -12,17 +13,19 @@ requirejs.config({
     //scripts that do not already call define()
 		//"bootstrap": ['jquery']
 	},
-	config: {
-		'modules/scripts/alertHello': {
-			value: "True"
+	config: { // config for each modules, which adds through 'module'
+		'returnName': {
+			value: true
 		}
 	}
 });
 //define('modules/scripts/alertHello', function(alertHello) {
 //	alert()
 //} );
-requirejs(["moment"],function( moment ){
-	//$(document).ready( function () {
+requirejs(["alertHello", "jquery", "returnName", "moment"], function( alertHello, $ , returnName, moment){
+	$(document).ready( function () {
+		alert("Hello user: " + returnName.name() + returnName.isTrue);
+		alertHello.sayHelloJquery();
         var dateFromUser = "26.06.1994";
         var parsingFormats = ["DD:MM:YYYY","YYYY:MM:DD","YYYY:MMM:DD"]; // it parser array which looks for matching, it parses all non alphabetic letters like seperator : and another such as * // / etc
         var locales = ["fr","en","us"];
@@ -72,4 +75,4 @@ requirejs(["moment"],function( moment ){
 			
 		};*/
 	});
-//} );
+} );
