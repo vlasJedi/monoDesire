@@ -39,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret lean-forward="true" />
+              <caret column="13" selection-start-column="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -96,17 +96,6 @@
             <path>
               <item name="testMomentJS" type="b2602c69:ProjectViewProjectNode" />
               <item name="testMomentJS" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="testMomentJS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="testMomentJS" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="angular" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="testMomentJS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="testMomentJS" type="462c0819:PsiDirectoryNode" />
               <item name="scripts" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -145,12 +134,12 @@
       <option name="presentableId" value="Default" />
       <updated>1552861629936</updated>
       <workItem from="1552861633243" duration="781000" />
-      <workItem from="1553111570890" duration="1161000" />
+      <workItem from="1553111570890" duration="1521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1942000" />
+    <option name="totallyTimeSpent" value="2302000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1040" extended-state="6" />
@@ -215,7 +204,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret lean-forward="true" />
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
