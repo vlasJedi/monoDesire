@@ -16,17 +16,34 @@ server.listen(1337, '127.0.0.27');
 	});
 	res.on('close', () => file.destroy() );
 }*/
-var pathToFiles = {'/': 'index.html','/index.html':'index.html','/index.js':'index.js','/config.json':'config.json'};
+var pathToFiles = {'/': 'index.html','/index.html':'index.html','/index.js':'index.js','/main.js': 'main.js',
+	'/require.js': 'require.js', '/config.json':'config.json'};
+var lib = ['/node_modules', '/scripts'];
 var fileExtToContentType = {'html': 'text/html','js': 'application/javascript','json': 'application/json'};
-function getReqPathToFile(req_url, pathToFiles) {
-	for ( var path in pathToFiles) {
-		console.log("req_url pathname is: " + req_url.pathname);
-		if ( path == req_url.pathname) {
-			return pathToFiles[path]; 
+
+function checkUrlToLib( lib, urlToCheck ) {
+	var regEx;
+	for ( var pathInLib in lib ) {
+		regEx = new RegEx( "^\\" + pathInLib );
+		if ( rexEx.test( urlToCheck ) ) {
+			return true;
 		}
 	}
-	return '';
+	return false;
+}
+function checkUrlToRoot( urlToCheck, root ) {
+	for ( var path in root ) {
+		if ( path == pathToCheck.pathname ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function getReqPathToFile( req_url, rootFiles, libFiles ) {
+	return ( checkUrlToLib( req_url, libFiles ) && checkUrlToRoot( req_url, rootFiles ) );
 };
+
 function getContentType(fileExt, fileExtToContentType) {
 	for( var fileToExt in fileExtToContentType ) {
 		if (fileExt == fileToExt){
