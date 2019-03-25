@@ -4,7 +4,8 @@ requirejs.config({
 		"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min",  // !!! Require JS automotically adds .JS
 		"returnName": "./scripts/returnName",
 		"alertHello": "./scripts/alertHello",
-		"moment":  "./node_modules/moment/min/moment-with-locales"
+		"moment":  "./node_modules/moment/min/moment-with-locales",
+		"angular": "./node_modules/angular/angular"
 	},
 	//If no baseUrl is explicitly set in the configuration, the default value will be the location of 
 	//the HTML page that loads require.js. If a data-main attribute is used, that path will become the baseUrl.
@@ -22,7 +23,9 @@ requirejs.config({
 //define('modules/scripts/alertHello', function(alertHello) {
 //	alert() hahahaha
 //} );
-requirejs(["alertHello", "jquery", "returnName", "moment"], function( alertHello, $ , returnName, moment){
+requirejs(["alertHello", "jquery", "returnName", "moment", "angular"], function( alertHello, $ , returnName, moment){
+	// to use for example angular we need specify it in array of imported .js
+
 	$(document).ready( function () {
 		alert("Hello user: " + returnName.name() + returnName.isTrue);
 		alertHello.sayHelloJquery();
