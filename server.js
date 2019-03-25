@@ -16,17 +16,45 @@ server.listen(1337, '127.0.0.27');
 	});
 	res.on('close', () => file.destroy() );
 }*/
-var pathToFiles = {'/': 'index.html','/index.html':'index.html','/index.js':'index.js','/config.json':'config.json'};
+var pathToFiles = {'/': 'index.html','/index.html':'index.html','/index.js':'index.js','/main.js': 'main.js',
+	'/require.js': 'require.js', '/config.json':'config.json'};
+var lib = ['/node_modules', '/scripts'];
 var fileExtToContentType = {'html': 'text/html','js': 'application/javascript','json': 'application/json'};
-function getReqPathToFile(req_url, pathToFiles) {
-	for ( var path in pathToFiles) {
-		console.log("req_url pathname is: " + req_url.pathname);
-		if ( path == req_url.pathname) {
-			return pathToFiles[path]; 
+
+function checkUrlToLib( urlToCheck, lib ) {
+	var regEx;
+	for ( var pathInLib in lib ) {
+		regEx = new RegExp( "^\\" + lib[pathInLib] );
+		console.log("url to check in regExp:" + urlToCheck);
+		console.log(regEx);
+		if ( regEx.test( urlToCheck ) ) {
+			return true;
 		}
 	}
-	return '';
+	return false;
+}
+function getUrlToRoot( urlToCheck, root ) {
+	for ( var path in root ) {
+		if ( path == urlToCheck ) {
+			return root[urlToCheck];
+		}
+	}
+	return false;
+}
+
+function getReqPathToFile( req_url, rootFiles, libFiles ) {
+	var resultPath = getUrlToRoot( req_url, rootFiles ) || checkUrlToLib( req_url, libFiles );
+	console.log(resultPath);
+	if( !resultPath ) {
+		return false;
+	} else if ( resultPath === true ) {
+		resultPath = req_url;
+		return "." + resultPath;
+	} else {
+		return resultPath;
+	}
 };
+
 function getContentType(fileExt, fileExtToContentType) {
 	for( var fileToExt in fileExtToContentType ) {
 		if (fileExt == fileToExt){
@@ -41,7 +69,8 @@ function getFileExt(pathToFile) {
 }
 server.on('request', function ( req, res ) { 	
 	var req_url = url.parse( req.url, true ); //true - parse query_string parameters, url.parse(..).query  - URL ?params object
-	var reqPathToFile = getReqPathToFile(req_url, pathToFiles);
+	console.log(req_url.pathname);
+	var reqPathToFile = getReqPathToFile(req_url.pathname, pathToFiles, lib);
 	if (reqPathToFile) {
 		fs.readFile(reqPathToFile, function (err, data) {
 						if (err) {
@@ -49,7 +78,7 @@ server.on('request', function ( req, res ) {
 							res.end(error500);
 						} else {
 							fileExt = getFileExt(reqPathToFile);
-							contType = getContentType(fileExt);
+							contType = getContentType(fileExt, fileExtToContentType);
 							// when we specify some headers we also need as first argument put statusCode !!!!
 							res.writeHead(200,{'Content-Type':contType});
 							//it is important to understand that if text/plain will be setted browers will not
