@@ -20,7 +20,7 @@ requirejs.config({
 	}
 });
 //define('modules/scripts/alertHello', function(alertHello) {
-//	alert()
+//	alert() hahahaha
 //} );
 requirejs(["alertHello", "jquery", "returnName", "moment"], function( alertHello, $ , returnName, moment){
 	$(document).ready( function () {
