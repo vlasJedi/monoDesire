@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="ngModule1">
 	<head>
 	</head>
 	<body>
-		Hello world
+	<div class="hello" ng-show="isHelloVisible">Hello world </div>
+	<!-- bind value in angular expression to input ng-model with name : name -->
+	<div class="testNgExp"  ng-controller="ngModule1Ctrl">
+		<div>{{"Locale is: " + locales[0] + " format: " + formats[0] + " initial date: " + date + " and date after filter1 is: "  + momentOutput1(date, dateFormat, locales[0]) }}</div>
+	</div>
+	<!--	binds ng-model to input -->
+	<label> Input date to parse <input type="text" ng-model="date"> </label>
+	<label> Final date format <input type="text" ng-model="dateFormat"> </label>
+
+	<div>
+
+		<!-- init variable, and switch on click to show/hide .hello -->
+		<input type="button" name="showHello" ng-click = "isHelloVisible = !isHelloVisible" ng-init="isHelloVisible = true" value="clickToSwitchVisability">
+	</div>
 		<script data-main="main.js" src="require.js"></script>
 	</body>
 </html>
