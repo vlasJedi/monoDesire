@@ -49,7 +49,7 @@ function getReqPathToFile( req_url, rootFiles, libFiles ) {
 		return false;
 	} else if ( resultPath === true ) {
 		resultPath = req_url;
-		return "." + resultPath;
+		return "." + resultPath;// from root dir '/' make current dir './'
 	} else {
 		return resultPath;
 	}

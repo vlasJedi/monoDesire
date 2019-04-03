@@ -3,14 +3,17 @@
 	<head>
 	</head>
 	<body>
+	<!--	binds ng-model to input -->
+	<label> Input date to parse <input type="text" ng-model="date"> </label>
+	<label> How to parse your date <input type="text" ng-model="dateParseFormat"> </label>
+	<label> Input your custom date format <input type="text" ng-model="dateCustomFormat"> </label>
+	<label> Input specific locale <input type="text" ng-model="locale"> </label>
 	<div class="hello" ng-show="isHelloVisible">Hello world </div>
 	<!-- bind value in angular expression to input ng-model with name : name -->
 	<div class="testNgExp"  ng-controller="ngModule1Ctrl">
-		<div>{{"Locale is: " + locales[0] + " format: " + formats[0] + " initial date: " + date + " and date after filter1 is: "  + momentOutput1(date, dateFormat, locales[0]) }}</div>
+		<div>{{"Locale is: " + locale + " format: " + dateCustomFormat + " initial date: " + date + " and date after filter1 is: "  + momentCustomOutput(
+    		date, dateParseFormat, dateCustomFormat, locale) }}</div>
 	</div>
-	<!--	binds ng-model to input -->
-	<label> Input date to parse <input type="text" ng-model="date"> </label>
-	<label> Final date format <input type="text" ng-model="dateFormat"> </label>
 
 	<div>
 
