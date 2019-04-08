@@ -18,8 +18,9 @@ server.listen(1337, '127.0.0.27');
 }*/
 var pathToFiles = {'/': 'index.html','/index.html':'index.html','/index.js':'index.js','/main.js': 'main.js',
 	'/require.js': 'require.js', '/config.json':'config.json'};
-var lib = ['/node_modules', '/scripts'];
-var fileExtToContentType = {'html': 'text/html','js': 'application/javascript','json': 'application/json'};
+var lib = ['/node_modules', '/scripts','/styles'];
+var fileExtToContentType = {'html': 'text/html','js': 'application/javascript','json': 'application/json',
+	'css': 'text/css'};
 
 function checkUrlToLib( urlToCheck, lib ) {
 	var regEx;
