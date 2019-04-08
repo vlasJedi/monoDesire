@@ -18,24 +18,19 @@ define(['angular', 'jquery', 'moment'], function( angular, $, moment ) {
 
                 return moment_1.format(dateCustomFormat);
             };
-<<<<<<< Updated upstream
             $scope.callDigest = function() {
                 $scope.$digest();
             };
             $scope.toggleVisibility = function() {
                 $scope.hidden = !$scope.hidden;
-            }
+            };
             //$scope.$watch('hidden',)
-=======
             $scope.toggleVisibility = function () {
                 $scope.hidden=!$scope.hidden;
-            }
-
->>>>>>> Stashed changes
+            };
         });
 
         // Filters used in html expression to pipe | some txt
-
         return ngModule1;
     }
 );
