@@ -5,7 +5,7 @@ define(['./returnName'],function(returnName) {
 			console.log("hello" + info.name() + " and isTrue:" + info.isTrue);
 		},
 		sayHelloJquery: function() {
-			$('body').text("New text from Jquery for you: " + info.name() + " and is True:" + info.isTrue);
+			$('.hello').text("New text from Jquery for you: " + info.name() + " and is True:" + info.isTrue);
 		}
 	};
 });
