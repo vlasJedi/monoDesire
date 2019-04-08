@@ -2,12 +2,14 @@
 <html ng-app="ngModule1">
 	<head>
 	</head>
-	<body>
+	<body ng-app="stylingForMainPage" ng-controller="styleMainPageBody">
+	{{style()}}
 	<!--	binds ng-model to input -->
 	<label> Input date to parse <input type="text" ng-model="date"> </label>
 	<label> How to parse your date <input type="text" ng-model="dateParseFormat"> </label>
 	<label> Input your custom date format <input type="text" ng-model="dateCustomFormat"> </label>
 	<label> Input specific locale <input type="text" ng-model="locale"> </label>
+    <label> test listening <input type="text" ng-model="testListening"> </label>
 	<div class="hello" ng-show="isHelloVisible">Hello world </div>
 	<!-- bind value in angular expression to input ng-model with name : name -->
 	<div class="testNgExp"  ng-controller="ngModule1Ctrl">

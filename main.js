@@ -6,7 +6,8 @@ require.config({
 		"alertHello": "./scripts/alertHello",
 		"moment":  "./node_modules/moment/min/moment-with-locales",
 		"angular": "./node_modules/angular/angular",
-		"ngModule1": "./scripts/ngModules/ngModule1"
+		"ngModule1": "./scripts/ngModules/ngModule1",
+		"stylingForMainPage": "./scripts/ngModules/stylingForMainPage"
 	},
 	//If no baseUrl is explicitly set in the configuration, the default value will be the location of 
 	//the HTML page that loads require.js. If a data-main attribute is used, that path will become the baseUrl.
@@ -40,7 +41,7 @@ require.config({
 //define('modules/scripts/alertHello', function(alertHello) {
 //	alert() hahahaha
 //} );
-require(["alertHello", "returnName", "ngModule1", "moment", "jquery"], function( alertHello, returnName, ngModule1, moment, $){
+require(["alertHello", "returnName", "ngModule1", "moment", "jquery", "stylingForMainPage"], function( alertHello, returnName, ngModule1, moment, $){
 	// to use for example angular we need specify it in array of imported .js
 		// bootstrap the app manually
 
