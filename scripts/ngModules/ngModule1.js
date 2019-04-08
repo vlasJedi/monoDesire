@@ -7,7 +7,7 @@ define(['angular', 'jquery', 'moment'], function( angular, $, moment ) {
 
         // Controller defines scope for html elements with this module used
         ngModule1.controller('ngModule1Ctrl', function ($scope) {
-            $scope.someValue = 'some%Value%';
+            $scope.hidden = false;
             // some example of formats: LLLL - locales
             //$scope.formats = ["DD + MMM + YYYY:hh+ZZ", "LLLL"];
             //$scope.locales = ["fr","en","us"];
@@ -18,6 +18,13 @@ define(['angular', 'jquery', 'moment'], function( angular, $, moment ) {
 
                 return moment_1.format(dateCustomFormat);
             };
+            $scope.callDigest = function() {
+                $scope.$digest();
+            };
+            $scope.toggleVisibility = function() {
+                $scope.hidden = !$scope.hidden;
+            }
+            //$scope.$watch('hidden',)
         });
 
         // Filters used in html expression to pipe | some txt
