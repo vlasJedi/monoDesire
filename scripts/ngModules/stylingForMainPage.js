@@ -8,9 +8,12 @@ define(['angular','jquery'], function(angular, $) {
         var stylingForMainPage = angular.module('stylingForMainPage', []);
         stylingForMainPage.controller('styleMainPageBody', function($scope) {
             $scope.style = function () {
-                var body = document.getElementsByTagName('body');
+                var body = document.getElementsByTagName('body')[0];
                 body.style.backgroundColor = "black";
+                body.style.color = '#668866';
             }
         });
+        //angular.bootstrap(document.getElementsByClassName('entry-for-ng-styling')[0],['stylingForMainPage']);
+        return stylingForMainPage;
     }
 );
