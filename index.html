@@ -22,7 +22,7 @@
 		<div>
 			<label> Input your custom date format <input type="text" ng-model="dateCustomFormat"> </label>
 			<span class="iso-output">{{momentISOoutput(date, dateParseFormat, locale)}}</span>
-			<span class="rfc-output"></span>
+			<span class="rfc-output">{{momentRFCoutput(date, dateParseFormat, locale)}}</span>
 		</div>
 		<div>
 			<label> Input specific locale <input type="text" ng-model="locale"> </label>

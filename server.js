@@ -1,12 +1,20 @@
 //let data = require( './quest_data' );
-let http = require('http');
-let server = new http.Server();
+let https = require('https');
+
 const url = require('url');
 const fs = require('fs'); // to work with file system  Read files Create files Update files Delete files Rename files
 const path = require('path');
 //let cookie = require('cookie');
+
 var error500 = 'Server internal error';
-server.listen(1337, '127.0.0.27');
+var privateKey = fs.readFileSync('./credentials/whatIsTime.com.key');
+var certificate = fs.readFileSync('./credentials/whatIsTime.com.pem');
+var caVlasCo = fs.readFileSync('./credentials/vlasRootCert.ca-bundle');
+
+var options = {key: privateKey, cert: certificate, ca: caVlasCo};
+console.log(options);
+
+//server.listen(2223, '127.0.0.27');
 
 /*function sendFile( file, res) {
 	file.pipe( res );
@@ -66,29 +74,29 @@ function getContentType(fileExt, fileExtToContentType) {
 }
 function getFileExt(pathToFile) {
 	fileSplitted = pathToFile.split('.')
-	return fileSplitted[1];
+	return fileSplitted[fileSplitted.length - 1];
 }
-server.on('request', function ( req, res ) { 	
+var serv = https.createServer(options, function ( req, res ) {
 	var req_url = url.parse( req.url, true ); //true - parse query_string parameters, url.parse(..).query  - URL ?params object
 	console.log(req_url.pathname);
 	var reqPathToFile = getReqPathToFile(req_url.pathname, pathToFiles, lib);
 	if (reqPathToFile) {
 		fs.readFile(reqPathToFile, function (err, data) {
-						if (err) {
-							res.statusCode = 500; // internal server error
-							res.end(error500);
-						} else {
-							fileExt = getFileExt(reqPathToFile);
-							contType = getContentType(fileExt, fileExtToContentType);
-							// when we specify some headers we also need as first argument put statusCode !!!!
-							res.writeHead(200,{'Content-Type':contType});
-							//it is important to understand that if text/plain will be setted browers will not
+			if (err) {
+				res.statusCode = 500; // internal server error
+				res.end(error500);
+			} else {
+				fileExt = getFileExt(reqPathToFile);
+				contType = getContentType(fileExt, fileExtToContentType);
+				// when we specify some headers we also need as first argument put statusCode !!!!
+				res.writeHead(200,{'Content-Type':contType});
+				//it is important to understand that if text/plain will be setted browers will not
 		//  render this as text/html, so to render it should be setup to text/html
 		// js - {'Content-Type': 'application/xhtml+xml'};
 		// json - {'Content-Type': 'application/json'}
-							res.end(data);
-						}
-				});
+				res.end(data);
+			}
+		});
 	}
 	/*switch (req_url.pathname) {
 			case '/': 
@@ -108,7 +116,8 @@ server.on('request', function ( req, res ) {
 	//If data is specified, it is equivalent to calling response.write(data, encoding) followed by response.end(callback).
 	//If callback is specified, it will be called when the response stream is finished.
 			
-	});
+	}).listen(8080, '127.0.0.22');
+console.log(serv);
 	
 	//res.setHeader('Set-Cookie',cookie.serialize('name','vlas'));
 	//let cookArr = req.headers.cookie.split('='); 

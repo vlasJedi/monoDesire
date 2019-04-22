@@ -24,12 +24,13 @@ define(['angular', 'jquery', 'moment'], function( angular, $, moment ) {
             $scope.momentISOoutput = function(txtDate, dateParseFormat, locale) {
                 var moment_1 = moment(txtDate, dateParseFormat, locale);
 
-                return "ISO format: " + moment_1.toISOString();
+                return "ISO8601 format: " + moment_1.format();
             };
             $scope.momentRFCoutput = function(txtDate, dateParseFormat, locale) {
+                var DATE_RFC2822 = "ddd, DD MMM YYYY HH:mm:ss Z";
                 var moment_1 = moment(txtDate, dateParseFormat, locale);
 
-                return "ISO format: " + moment_1.toISOString();
+                return "RFC2822 format: " + moment_1.format(DATE_RFC2822);
             };
         });
 
