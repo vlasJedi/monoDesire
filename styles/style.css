@@ -1,3 +1,16 @@
 .hidden {
     visibility: hidden;
 }
+.wrapper-format-output {
+    padding-left: 10%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.iso-output-text-desc {
+    font-size: 1.2rem;
+    color: aliceblue;
+}
+.rfc-output-text-desc {
+    font-size: 1.2rem;
+    color: aliceblue;
+}
