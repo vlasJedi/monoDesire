@@ -1,9 +1,11 @@
+import privatBankService from "./serverModules/PrivatBank/privatBankService.mjs";
 //let data = require( './quest_data' );
-let https = require('https');
+import https from 'https';
 
-const url = require('url');
-const fs = require('fs'); // to work with file system  Read files Create files Update files Delete files Rename files
-const path = require('path');
+
+import url from 'url';
+import fs from 'fs'; // to work with file system  Read files Create files Update files Delete files Rename files
+import path from 'path';
 //let cookie = require('cookie');
 
 var error500 = 'Server internal error';
@@ -12,7 +14,6 @@ var certificate = fs.readFileSync('./credentials/whatIsTime.com.pem');
 var caVlasCo = fs.readFileSync('./credentials/vlasRootCert.ca-bundle');
 
 var options = {key: privateKey, cert: certificate, ca: caVlasCo};
-console.log(options);
 
 //server.listen(2223, '127.0.0.27');
 
@@ -29,13 +30,14 @@ var pathToFiles = {'/': 'index.html','/index.html':'index.html','/index.js':'ind
 var lib = ['/node_modules', '/scripts','/styles'];
 var fileExtToContentType = {'html': 'text/html','js': 'application/javascript','json': 'application/json',
 	'css': 'text/css'};
+var secretForJWT = "vlas";
+//'/authentificate': sendJWT,
+var api = { '/privatServiceHello': privatBankService.getAvailableForDay()};
 
 function checkUrlToLib( urlToCheck, lib ) {
 	var regEx;
 	for ( var pathInLib in lib ) {
 		regEx = new RegExp( "^\\" + lib[pathInLib] );
-		console.log("url to check in regExp:" + urlToCheck);
-		console.log(regEx);
 		if ( regEx.test( urlToCheck ) ) {
 			return true;
 		}
@@ -53,7 +55,6 @@ function getUrlToRoot( urlToCheck, root ) {
 
 function getReqPathToFile( req_url, rootFiles, libFiles ) {
 	var resultPath = getUrlToRoot( req_url, rootFiles ) || checkUrlToLib( req_url, libFiles );
-	console.log(resultPath);
 	if( !resultPath ) {
 		return false;
 	} else if ( resultPath === true ) {
@@ -73,12 +74,13 @@ function getContentType(fileExt, fileExtToContentType) {
 	return false;
 }
 function getFileExt(pathToFile) {
-	fileSplitted = pathToFile.split('.')
+	var fileSplitted = pathToFile.split('.')
 	return fileSplitted[fileSplitted.length - 1];
 }
 var serv = https.createServer(options, function ( req, res ) {
 	var req_url = url.parse( req.url, true ); //true - parse query_string parameters, url.parse(..).query  - URL ?params object
-	console.log(req_url.pathname);
+	console.log("request to server: " + req);
+	console.info("request to server: " + req);
 	var reqPathToFile = getReqPathToFile(req_url.pathname, pathToFiles, lib);
 	if (reqPathToFile) {
 		fs.readFile(reqPathToFile, function (err, data) {
@@ -86,8 +88,8 @@ var serv = https.createServer(options, function ( req, res ) {
 				res.statusCode = 500; // internal server error
 				res.end(error500);
 			} else {
-				fileExt = getFileExt(reqPathToFile);
-				contType = getContentType(fileExt, fileExtToContentType);
+				var fileExt = getFileExt(reqPathToFile);
+				var contType = getContentType(fileExt, fileExtToContentType);
 				// when we specify some headers we also need as first argument put statusCode !!!!
 				res.writeHead(200,{'Content-Type':contType});
 				//it is important to understand that if text/plain will be setted browers will not
@@ -99,7 +101,7 @@ var serv = https.createServer(options, function ( req, res ) {
 		});
 	}
 	/*switch (req_url.pathname) {
-			case '/': 
+			case '/':
 				fs.readFile('index.html', function (err, data) {
 						if (err) {
 							res.writeHead({'Content-Type':'text/html'});
@@ -111,14 +113,14 @@ var serv = https.createServer(options, function ( req, res ) {
 						}
 				});
 				break;*/
-				//This method signals to the server that all of the response headers and body have been sent; that server should consider 
+				//This method signals to the server that all of the response headers and body have been sent; that server should consider
 	//this message complete. The method, response.end(), MUST be called on each response.
 	//If data is specified, it is equivalent to calling response.write(data, encoding) followed by response.end(callback).
 	//If callback is specified, it will be called when the response stream is finished.
-			
+
 	}).listen(8080, '127.0.0.22');
 console.log(serv);
-	
+
 	//res.setHeader('Set-Cookie',cookie.serialize('name','vlas'));
 	//let cookArr = req.headers.cookie.split('='); 
 	//console.log(  /*cookArr[0] + ":" + */cookArr[1]);
