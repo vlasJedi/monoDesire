@@ -4,6 +4,7 @@ require.config({
 		"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min",  // !!! Require JS automotically adds .JS
 		"returnName": "./scripts/returnName",
 		"alertHello": "./scripts/alertHello",
+		"xhr": "./scripts/xhr",
 		"moment":  "./node_modules/moment/min/moment-with-locales",
 		"angular": "./node_modules/angular/angular",
 		"ngModule1": "./scripts/ngModules/ngModule1",
@@ -29,6 +30,9 @@ require.config({
 		},
 		"moment": {
 			'exports': 'moment'
+		},
+		"xhr": {
+			'exports': 'xhr'
 		}
 
 	},
@@ -41,7 +45,8 @@ require.config({
 //define('modules/scripts/alertHello', function(alertHello) {
 //	alert() hahahaha
 //} );
-require(["alertHello", "returnName", "ngModule1", "moment", "jquery", "stylingForMainPage"], function( alertHello, returnName, ngModule1, moment, $){
+require(["alertHello", "returnName", "ngModule1", "moment", "jquery", "xhr", "stylingForMainPage"],
+	function( alertHello, returnName, ngModule1, moment, $, xhr, privatBankService){
 	// to use for example angular we need specify it in array of imported .js
 		// bootstrap the app manually
 
@@ -49,46 +54,16 @@ require(["alertHello", "returnName", "ngModule1", "moment", "jquery", "stylingFo
 
 		alertHello.sayHelloJquery();
 
-        var simpleProm = new Promise(function(resolve,reject) {
-        	window.navigator.geolocation.getCurrentPosition(function(location){resolve(location);}	
-        	);
-        });
-        simpleProm.then(function(location){console.log(location)});
-        /*var xhr = new XMLHttpRequest();
-		//xhr.withCredentials = true;
-		var request = {
-			method: "GET",
-			url: "https://my-json-server.typicode.com/vlasJedi/RestAPI", //Same Origin Policy - by default only possible access to prot://domain:port
-			asynch: true,
-			user: null,
-			password: null
-		}
-		xhr.open(request.method,request.url,request.asynch,request.user,request.password);  // initializates request
-		xhr.setRequestHeader("Access-Control-Allow-Origin","file:///C:/requireJS");
-		xhr.send(); // is async by default, but can be sync  -- as argument can take next
-		//xhr.status; // code
-		//xhr.statusText; // text to code
-		//xhr.responseText; // response text from server
-		//xhr.responseXML; // response in XMl
-		//xhr.abort;
-		//var query = {
-			//fname: "vlas",
-			//sname: "dielov"
-		//};
-		//var URLqueryObj = new URLSearchParams();
-		//for( var key in query ) {
-			//URLqueryObj.set( key , query[key] );
-		//}
-		//console.log(URLqueryObj.toString());
-		//xhr.send(URLqueryObj);
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState != 4 ) {
-				console.log("Current readyState value is: " + xhr.readyState );
-				return;
-			}
-			console.log("Server status code xhr.status: " + xhr.status + ", server status text: " + xhr.statusText );
-			console.log("Response from server xhr.responseText: " + xhr.responseText);
-			
-		};*/
+		/*
+		var requestToWeater = xhr();
+		requestToWeater.get('https://www.frankfurter.app/latest', {'Content-Type': 'application/json'},null,
+			function(data) {
+				console.log(data);
+			},
+			function () {
+				console.log('error');
+			});
+
+		 */
 	});
 } );

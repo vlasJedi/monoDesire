@@ -1,5 +1,5 @@
 export default {
-    getAvailableForDay: function () {
+    getBalance: function () {
         return 100;
     }
 };

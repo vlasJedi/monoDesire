@@ -1,7 +1,7 @@
-import privatBankService from "./serverModules/PrivatBank/privatBankService.mjs";
 //let data = require( './quest_data' );
 import https from 'https';
-
+import http from 'http';
+import privatBankService from './serverModules/PrivatBank/privatBankService.mjs';
 
 import url from 'url';
 import fs from 'fs'; // to work with file system  Read files Create files Update files Delete files Rename files
@@ -14,6 +14,53 @@ var certificate = fs.readFileSync('./credentials/whatIsTime.com.pem');
 var caVlasCo = fs.readFileSync('./credentials/vlasRootCert.ca-bundle');
 
 var options = {key: privateKey, cert: certificate, ca: caVlasCo};
+const postData = '<?xml version="1.0" encoding="UTF-8"?>'+
+	'<request version="1.0">'+
+	'<merchant>'+
+	'<id>75482</id>'+
+	'<signature>ab871c9601cf28920c4c0ff63041ea585da9de89</signature>'+
+	'</merchant>'+
+	'<data>'+
+	'<oper>cmt</oper>'+
+	'<wait>0</wait>'+
+	'<test>0</test>'+
+	'<payment id="">'+
+	'<prop name="cardnum" value="5168742060221193" />'+
+	'<prop name="country" value="UA" />'+
+	'</payment>'+
+	'</data>'+
+	'</request>';
+
+const optionsReq = {
+	hostname: 'api.privatbank.ua',
+	port: 443,
+	path: '/p24api/balance',
+	method: 'POST',
+	headers: {
+		'Content-Type': 'text/xml',
+	},
+	protocol: 'https:',
+	host: '176.38.114.66'
+};
+
+const reqFromServer = https.request(optionsReq, function (resOuterServer) {
+	let data = '';
+	resOuterServer.on('data', function (chunk) {
+		data += chunk;
+		console.log('BODY: ' + chunk);
+	});
+	resOuterServer.on('end', function () {
+		console.log(data);
+	});
+});
+
+reqFromServer.on('error', function (error) {
+	console.error('problem with request: ' + error.message);
+});
+
+// Write data to request body
+reqFromServer.write(postData);
+reqFromServer.end();
 
 //server.listen(2223, '127.0.0.27');
 
@@ -32,7 +79,7 @@ var fileExtToContentType = {'html': 'text/html','js': 'application/javascript','
 	'css': 'text/css'};
 var secretForJWT = "vlas";
 //'/authentificate': sendJWT,
-var api = { '/privatServiceHello': privatBankService.getAvailableForDay()};
+var servicesAPI = { '/callPrivatService': privatBankService.getBalance()};
 
 function checkUrlToLib( urlToCheck, lib ) {
 	var regEx;
@@ -52,6 +99,14 @@ function getUrlToRoot( urlToCheck, root ) {
 	}
 	return false;
 }
+function tryToResolveURLAsCallToAPI( req_url, servicesAPI ) {
+	Object.keys(servicesAPI).forEach(function (serviceURL) {
+		if (serviceURL === req_url ) {
+			return true;
+		}
+	});
+	return false;
+};
 
 function getReqPathToFile( req_url, rootFiles, libFiles ) {
 	var resultPath = getUrlToRoot( req_url, rootFiles ) || checkUrlToLib( req_url, libFiles );
@@ -91,7 +146,7 @@ var serv = https.createServer(options, function ( req, res ) {
 				var fileExt = getFileExt(reqPathToFile);
 				var contType = getContentType(fileExt, fileExtToContentType);
 				// when we specify some headers we also need as first argument put statusCode !!!!
-				res.writeHead(200,{'Content-Type':contType});
+				res.writeHead(200,{'Content-Type':contType, 'Access-Control-Allow-Origin': '*'});
 				//it is important to understand that if text/plain will be setted browers will not
 		//  render this as text/html, so to render it should be setup to text/html
 		// js - {'Content-Type': 'application/xhtml+xml'};
@@ -99,6 +154,58 @@ var serv = https.createServer(options, function ( req, res ) {
 				res.end(data);
 			}
 		});
+	} else if ( tryToResolveURLAsCallToAPI( req_url, servicesAPI ) ) {
+		//const postData = querystring.stringify({
+			//'msg': 'Hello World!'
+		//});
+		const postData = '<?xml version="1.0" encoding="UTF-8"?>'+
+			'<request version="1.0">'+
+			'<merchant>'+
+			'<id>75482</id>'+
+			'<signature>ab871c9601cf28920c4c0ff63041ea585da9de89</signature>'+
+			'</merchant>'+
+			'<data>'+
+			'<oper>cmt</oper>'+
+			'<wait>0</wait>'+
+			'<test>0</test>'+
+			'<payment id="">'+
+			'<prop name="cardnum" value="5168742060221193" />'+
+			'<prop name="country" value="UA" />'+
+			'</payment>'+
+			'</data>'+
+			'</request>';
+
+		const options = {
+			hostname: 'api.privatbank.ua',
+			port: 443,
+			path: '/p24api/balance',
+			method: 'POST',
+			headers: {
+				'Content-Type': 'text/xml',
+			},
+			protocol: 'https:'
+		};
+
+		const reqFromServer = http.request(options, function (resOuterServer) {
+			let data = '';
+			resOuterServer.on('data', function (chunk) {
+				data += chunk;
+				console.log('BODY: ' + chunk);
+			});
+			resOuterServer.on('end', function () {
+				console.log(data);
+				res.writeHead(200,{'Content-Type': 'text/xml'});
+				res.end(data);
+			});
+		});
+
+		reqFromServer.on('error', function (error) {
+			console.error('problem with request: ' + error.message);
+		});
+
+// Write data to request body
+		reqFromServer.write(postData);
+		reqFromServer.end();
 	}
 	/*switch (req_url.pathname) {
 			case '/':
