@@ -1,3 +1,4 @@
+//https://safe-refuge-62214.herokuapp.com/ | https://git.heroku.com/safe-refuge-62214.git
 //let data = require( './quest_data' );
 import https from 'https';
 import http from 'http';
@@ -13,7 +14,11 @@ var privateKey = fs.readFileSync('./credentials/whatIsTime.com.key');
 var certificate = fs.readFileSync('./credentials/whatIsTime.com.pem');
 var caVlasCo = fs.readFileSync('./credentials/vlasRootCert.ca-bundle');
 
-var options = {key: privateKey, cert: certificate, ca: caVlasCo};
+var options = {
+	key: privateKey,
+	cert: certificate,
+	ca: caVlasCo,
+	rejectUnauthorized: false};
 const postData = '<?xml version="1.0" encoding="UTF-8"?>'+
 	'<request version="1.0">'+
 	'<merchant>'+
@@ -39,9 +44,9 @@ const optionsReq = {
 	headers: {
 		'Content-Type': 'text/xml',
 	},
-	protocol: 'https:',
-	host: '176.38.114.66'
+	protocol: 'https:'
 };
+//host: '176.38.114.66'
 
 const reqFromServer = https.request(optionsReq, function (resOuterServer) {
 	let data = '';
