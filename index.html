@@ -1,26 +1,45 @@
 <!DOCTYPE html>
-<html ng-app="ngModule1">
+<html>
 	<head>
+		<meta charset="UTF-8">
+		<title>whatIsDate</title>
+		<link rel="stylesheet" href="styles/style.css">
 	</head>
-	<body ng-app="stylingForMainPage" ng-controller="styleMainPageBody">
-	{{style()}}
-	<!--	binds ng-model to input -->
-	<label> Input date to parse <input type="text" ng-model="date"> </label>
-	<label> How to parse your date <input type="text" ng-model="dateParseFormat"> </label>
-	<label> Input your custom date format <input type="text" ng-model="dateCustomFormat"> </label>
-	<label> Input specific locale <input type="text" ng-model="locale"> </label>
-    <label> test listening <input type="text" ng-model="testListening"> </label>
-	<div class="hello" ng-show="isHelloVisible">Hello world </div>
-	<!-- bind value in angular expression to input ng-model with name : name -->
-	<div class="testNgExp"  ng-controller="ngModule1Ctrl">
-		<div>{{"Locale is: " + locale + " format: " + dateCustomFormat + " initial date: " + date + " and date after filter1 is: "  + momentCustomOutput(
-    		date, dateParseFormat, dateCustomFormat, locale) }}</div>
-	</div>
+	<body>
+	<div class="entry-for-ng-styling" ng-app="stylingForMainPage" ng-controller="styleMainPageBody">
+		{{style()}}
+		  <!--	binds ng-model to input -->
 
+	</div>
+	<div class="entry-ng-module-1" ng-app="ngModule1" ng-controller="ngModule1Ctrl">
+		
+		<div>
+			<label> Input date to parse <input type="text" ng-model="date"> </label>
+		</div>
+		<div>
+			<label> How to parse your date <input type="text" ng-model="dateParseFormat"> </label>
+		</div>
+		<div>
+			<label> Input your custom date format <input type="text" ng-model="dateCustomFormat"> </label>
+			<div class="wrapper-format-output">
+				<div class="iso-output">
+					<span class="iso-output-text-desc">ISO 8601:</span>
+					<span class="iso-output-date">{{momentISOoutput(date, dateParseFormat, locale)}}</span>
+				</div>
+				<div class="rfc-output">
+					<span class="rfc-output-text-desc">RFC 2822:</span>
+					<span class="rfc-output-date">{{momentRFCoutput(date, dateParseFormat, locale)}}</span>
+				</div>
+				<canvas class="times-element"></canvas>
+				<div>{{promiseResult}}</div>
+			</div>
+		</div>
+		<div>
+			<label> Input specific locale <input type="text" ng-model="locale"> </label>
+		</div>
+	</div>
 	<div>
 
-		<!-- init variable, and switch on click to show/hide .hello -->
-		<input type="button" name="showHello" ng-click = "isHelloVisible = !isHelloVisible" ng-init="isHelloVisible = true" value="clickToSwitchVisability">
 	</div>
 		<script data-main="main.js" src="require.js"></script>
 	</body>

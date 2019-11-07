@@ -1,0 +1,12 @@
+{
+  "name": "privatbank",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "service to work with privat bank api",
+  "main": "./privatBankService.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vlas",
+  "license": "ISC"
+}
