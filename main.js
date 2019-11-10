@@ -1,14 +1,14 @@
 require.config({
 	//baseUrl: "modules/scripts", //base entry point to find requested modules
 	paths: {
-		"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min",  // !!! Require JS automotically adds .JS
+		//"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min",  // !!! Require JS automotically adds .JS
 		"returnName": "./scripts/returnName",
 		"alertHello": "./scripts/alertHello",
-		"xhr": "./scripts/xhr",
-		"moment":  "./node_modules/moment/min/moment-with-locales",
+		"xhr": "./app/utils/xhr",
 		"angular": "./node_modules/angular/angular",
-		"ngModule1": "./scripts/ngModules/ngModule1",
-		"stylingForMainPage": "./scripts/ngModules/stylingForMainPage"
+		"text": "./node_modules/text/text",
+		"listForm": "./app/listForm/listForm",
+		"formField": "./app/listForm/formField"
 	},
 	//If no baseUrl is explicitly set in the configuration, the default value will be the location of 
 	//the HTML page that loads require.js. If a data-main attribute is used, that path will become the baseUrl.
@@ -22,17 +22,13 @@ require.config({
 		// before setting angular to global export, it was not possible to load it here in requirejs section
 		// so each angular module was not work properly, after exporting it angular starts properly loads
 		// and also modules imports angular without specifying a path to the angular
+
+		//if module is not AMD type and need some dependencies then it need to be specified here
+		//only use shim config for non-AMD scripts,
+		//scripts that do not already call define()
+		//"bootstrap": ['jquery']
 		"angular": {
 			'exports': 'angular'
-		},
-		"jquery": {
-			"exports": 'jquery'
-		},
-		"moment": {
-			'exports': 'moment'
-		},
-		"xhr": {
-			'exports': 'xhr'
 		}
 
 	},
@@ -45,25 +41,32 @@ require.config({
 //define('modules/scripts/alertHello', function(alertHello) {
 //	alert() hahahaha
 //} );
-require(["alertHello", "returnName", "ngModule1", "moment", "jquery", "xhr", "stylingForMainPage"],
-	function( alertHello, returnName, ngModule1, moment, $, xhr, privatBankService){
-	// to use for example angular we need specify it in array of imported .js
+require(["listForm", "xhr"],
+	function(displayTime, xhr) {
+		// to use for example angular we need specify it in array of imported .js
 		// bootstrap the app manually
+		angular.element(document).ready(function () {
 
-	$(document).ready( function () {
+			angular.bootstrap(document.getElementById("listForm"),['listForm']);
 
-		alertHello.sayHelloJquery();
-
-		/*
-		var requestToWeater = xhr();
-		requestToWeater.get('https://www.frankfurter.app/latest', {'Content-Type': 'application/json'},null,
-			function(data) {
-				console.log(data);
-			},
-			function () {
-				console.log('error');
-			});
-
-		 */
-	});
-} );
+			/*alert("Hello user: " + returnName.name() + returnName.isTrue);
+            alertHello.sayHelloJquery();
+            var dateFromUser = "26.06.1994";
+            var parsingFormats = ["DD:MM:YYYY","YYYY:MM:DD","YYYY:MMM:DD"]; // it parser array which looks for matching, it parses all non alphabetic letters like seperator : and another such as * // / etc
+            var locales = ["fr","en","us"];
+            console.log("Date inputted by user is valid or not:"  + moment(dateFromUser,parsingFormats)._isValid);
+            var moment_1 = moment(dateFromUser,parsingFormats,locales[0]);
+            console.log("Locale is: " + moment_1._locale._abbr + " and date is: " + moment_1.format("DD + MMM + YYYY:hh+ZZ"));
+            console.log("Locale is: " + moment_1._locale._abbr + " and date is: " + moment_1.format("LLLL"));
+            var simpleProm = new Promise(function(resolve,reject) {
+                window.navigator.geolocation.getCurrentPosition(function(location){resolve(location);}
+                );
+            });
+            simpleProm.then(function(location){console.log(location)});*/
+			/*var xhr = new XMLHttpRequest();
+            });
+            } );
+             */
+		});
+	}
+);
