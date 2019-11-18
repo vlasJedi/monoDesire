@@ -2,13 +2,11 @@ require.config({
 	//baseUrl: "modules/scripts", //base entry point to find requested modules
 	paths: {
 		//"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min",  // !!! Require JS automotically adds .JS
-		"returnName": "./scripts/returnName",
-		"alertHello": "./scripts/alertHello",
 		"xhr": "./app/utils/xhr",
 		"angular": "./node_modules/angular/angular",
 		"text": "./node_modules/text/text",
 		"listForm": "./app/listForm/listForm",
-		"formField": "./app/listForm/formField"
+		"formField": "./app/listForm/formField/formField"
 	},
 	//If no baseUrl is explicitly set in the configuration, the default value will be the location of 
 	//the HTML page that loads require.js. If a data-main attribute is used, that path will become the baseUrl.

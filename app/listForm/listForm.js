@@ -1,8 +1,10 @@
 //
-define(['angular', "text!listForm.html", "text!formField.html"], function(angular, listFormHTML, formFieldHTML) {
+define(['angular', "text!listForm.html", "formField"], function(angular, listFormHTML, formField) {
     let listForm = angular.module('listForm', []);
+    // inject formField
+    listForm.directive("formField", formField);
     // Directive represents html representation of the module
-    listForm.directive("listForm", function () {
+    return listForm.directive("listForm", function () {
         return {
             template: listFormHTML,
             restrict: "E",
@@ -35,24 +37,6 @@ define(['angular', "text!listForm.html", "text!formField.html"], function(angula
             }]
         };
     });
-    listForm.directive("formField", function () {
-        return {
-            template: formFieldHTML,
-            replace: true,
-            require: "^listForm",
-            scope: {
-                fieldCaption: "=",
-                fieldTextDisplay: "=",
-                selected: "="
-            },
-            link: function (scope, element, attrs, listFormCtrl) {
-                element.on("click", function() {
-                    listFormCtrl.handleClickOnFormField(scope);
-                });
-            }
-        };
-    });
-    return listForm;
 });
 
 
