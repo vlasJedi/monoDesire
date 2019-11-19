@@ -1,0 +1,10 @@
+.form-field {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-field-caption {
+    display: inline-block;
+    width: 100px;
+}

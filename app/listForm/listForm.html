@@ -1,4 +1,3 @@
-<div>
-    <form-field ng-repeat="formFieldDesc in formFieldsDesc" field-caption="formFieldDesc.formFieldCaption"
-                field-text-display="formFieldDesc.formFieldTextDisplay" selected="selected"></form-field>
-</div>
+<form>
+    <form-field ng-repeat="modelSync in models" model-sync="modelSync" on-change="onChangeFormField(formFieldTextDisplay)"></form-field>
+</form>

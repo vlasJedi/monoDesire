@@ -5,14 +5,11 @@ define(["angular", "text!formField.html"], function(angular, formField) {
             replace: true,
             require: "^listForm",
             scope: {
-                fieldCaption: "=",
-                fieldTextDisplay: "=",
-                selected: "="
+                modelSync: "=",
+                onChange: "&"
             },
             link: function (scope, element, attrs, listFormCtrl) {
-                element.on("click", function() {
-                    listFormCtrl.handleClickOnFormField(scope);
-                });
+
             }
         };
     };

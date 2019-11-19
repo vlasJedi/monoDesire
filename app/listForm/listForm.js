@@ -10,7 +10,7 @@ define(['angular', "text!listForm.html", "formField"], function(angular, listFor
             restrict: "E",
             replace: true,
             controller: ['$scope', function ($scope) {
-                $scope.formFieldsDesc = [
+                $scope.models = [
                     {
                         formFieldCaption: "First Name",
                         formFieldTextDisplay: "Vlas"
@@ -20,20 +20,9 @@ define(['angular', "text!listForm.html", "formField"], function(angular, listFor
                         formFieldTextDisplay: "Dielov"
                     }
                 ];
-                this.handleClickOnFormField = function(formField) {
-                    if ($scope.selectedFormField) {
-                        $scope.selectedFormField.fieldTextDisplay = "not active";
-                        $scope.selectedFormField.selected = false;
-                        $scope.selectedFormField = formField;
-                        $scope.selectedFormField.fieldTextDisplay = "active";
-                        $scope.selectedFormField.selected = true;
-                    } else {
-                        $scope.selectedFormField = formField;
-                        $scope.selectedFormField.fieldTextDisplay = "active";
-                        $scope.selectedFormField.selected = true;
-                    }
+                $scope.onChangeFormField = function(formFieldTextDisplay) {
+                    console.log(formFieldTextDisplay);
                 };
-                this.getModule = function() {return listForm};
             }]
         };
     });
