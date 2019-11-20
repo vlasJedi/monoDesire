@@ -3,13 +3,12 @@ define(["angular", "text!formField.html"], function(angular, formField) {
         return {
             template: formField,
             replace: true,
-            require: "^listForm",
             scope: {
                 modelSync: "=",
-                onChange: "&"
+                handle: "="
             },
+            require: "^listForm",
             link: function (scope, element, attrs, listFormCtrl) {
-
             }
         };
     };

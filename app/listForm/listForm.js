@@ -12,18 +12,25 @@ define(['angular', "text!listForm.html", "formField"], function(angular, listFor
             controller: ['$scope', function ($scope) {
                 $scope.models = [
                     {
+                        formFieldName: "fName",
                         formFieldCaption: "First Name",
-                        formFieldTextDisplay: "Vlas"
+                        formFieldTextDisplay: "Vlas",
+                        formFieldVisibility: true
                     },
                     {
+                        formFieldName: "sName",
                         formFieldCaption: "Second Name",
-                        formFieldTextDisplay: "Dielov"
+                        formFieldTextDisplay: "Dielov",
+                        formFieldVisibility: true
                     }
                 ];
-                $scope.onChangeFormField = function(formFieldTextDisplay) {
-                    console.log(formFieldTextDisplay);
+                $scope.handle = {
+                    onChangeFormField: function(textDisplay) {
+                        console.log(textDisplay);
+                    }
                 };
-            }]
+            }],
+            controllerAs: "listFormCtrl"
         };
     });
 });
