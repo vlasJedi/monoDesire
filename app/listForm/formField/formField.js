@@ -5,10 +5,12 @@ define(["angular", "text!formField.html"], function(angular, formField) {
             replace: true,
             scope: {
                 modelSync: "=",
-                handle: "="
+                handle: "=",
+                name: "@"
             },
-            require: "^listForm",
-            link: function (scope, element, attrs, listFormCtrl) {
+            require: "^form",
+            link: function(scope, element, attrs, formCtrl) {
+
             }
         };
     };
