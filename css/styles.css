@@ -8,3 +8,7 @@
     display: inline-block;
     width: 100px;
 }
+
+#listForm {
+    border: 1px solid black;
+}

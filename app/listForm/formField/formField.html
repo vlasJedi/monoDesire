@@ -1,4 +1,7 @@
 <label ng-if="modelSync.formFieldVisibility" class="form-field">
-    <span ng-bind="modelSync.formFieldCaption" class="form-field-caption"></span>
-    <input name="{{modelSync.formFieldName}}" type="text" ng-model="modelSync.formFieldTextDisplay" ng-change="handle.onChangeFormField(modelSync.formFieldTextDisplay)"/>
+    <span ng-bind="caption" class="form-field-caption"></span>
+    <input name="{{modelSync.formFieldName}}" type="text" ng-model="ngModel"
+           ng-required="ngRequired"
+           ng-pattern="pattern"
+           ng-change="onChange({textDisplayed: ngModel, name: modelSync.formFieldName})"/>
 </label>
