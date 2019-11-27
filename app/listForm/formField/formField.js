@@ -1,25 +1,34 @@
-define(["angular", "text!formField.html"], function(angular, formField) {
-    return function () {
+define([], function() {
+    return function() {
         return {
-            template: formField,
-            scope: {
-                modelSync: "=",
-                onChange: "&",
-                caption: "=",
-                ngModel: "=",
-                ngRequired: "@",
-                pattern: "="
-            },
-            // specify directive to require
-            require: ["^form", "^listForm", "ngModel"], // to get form ctrl is default require with ^form
-            link: function(scope, element, attrs, formCtrls) {
-                let formCtrl = formCtrls[0];
-                let mainCtrl = formCtrls[1];
-                let thisInput = formCtrls[2];
-                element.on("click", function() {
-                   mainCtrl.notifyFormCtrl({element: scope, event: "click"});
-                });
-            }
+          restrict: "A",
+          require: "ngModel",
+          link: function(scope, element, attrs, modelCtrl) {
+              console.log(`Ctrl with name: ${modelCtrl.$name} is linked`);
+              function log(someFunc, template) {
+                  return function(value) {
+                      let res = someFunc(value);
+                      console.log(template + " in: " + value + " out: " + res);
+                      return res;
+                  }
+              }
+              let upperCaseFirstLetter = function(string) {
+                  console.log("Passing through upperCaseFirstLetter formatter");
+                  return string.slice(0,1).toUpperCase() + string.slice(1);
+              };
+              modelCtrl.$formatters.push(log(upperCaseFirstLetter, "Result of formatter "));
+
+              // render works to set final view value in each ctrl
+              modelCtrl.$render = function() {
+                  console.log("$render invoked, and $viewValue: " + modelCtrl.$viewValue + " $modelValue: " + modelCtrl.$modelValue);
+                  element.val(modelCtrl.$viewValue);
+                  console.log("Input value updated");
+              }
+
+              modelCtrl.$viewChangeListeners.push(function() {
+                  console.log("$viewChangeListener is called, $viewValue: " + modelCtrl.$viewValue + " and $modelValue: " + modelCtrl.$modelValue);
+              });
+          }
         };
-    };
+    }
 });
