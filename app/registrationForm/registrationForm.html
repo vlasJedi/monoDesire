@@ -1,0 +1,16 @@
+<!--mainCtrl is instance of ctrl and as prop rootListForm is not exist, then formCtrl will be binded here-->
+<ng-form name="registrationForm">
+    <div class="form-field-container" ng-repeat="modelSync in models" ng-if="modelSync.formFieldVisibility" >
+    <label ng-cloak class="form-field">
+        <span class="form-field-caption">{{modelSync.formFieldCaption}}: </span>
+        <input class="form-field-input" form-field name="{{modelSync.formFieldName}}" type="text" ng-model="modelSync.formFieldTextDisplay"
+               ng-required="true"
+               ng-pattern="/[a-zA-Z0-9]+/"
+               ng-change="handle.onChangeFormField(modelSync.formFieldTextDisplay, modelSync.formFieldName)"
+               ng-minlength="2"
+               placeholder="type name..."
+               ng-class="{'ng-valid': $valid, 'form-field-forsaken': $touched && $invalid}"
+        />
+    </label>
+    </div>
+</ng-form>
