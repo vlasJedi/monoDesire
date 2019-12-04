@@ -51,6 +51,7 @@ define([], function() {
                       modelCtrl.$render();
                   }
               });
+              scope.registrationFormCtrl.getFormFieldName($scope.$index);
           }
         };
     }

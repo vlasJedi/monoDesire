@@ -17,6 +17,9 @@ define(['angular', "text!registrationForm.html", "formField"], function(angular,
                 this.notifyFormCtrl = function (elementUpdate) {
                     console.log(`Input field with name: ${elementUpdate.element.modelSync.formFieldName} + has such event: ${elementUpdate.event}`);
                 };
+                this.getFormFieldName = function(index) {
+                    return $scope.models[index].formFieldName;
+                };
                 $scope.models = [
                     {
                         formFieldName: "fName",
@@ -52,7 +55,7 @@ define(['angular', "text!registrationForm.html", "formField"], function(angular,
             },
             // ctrl this. can be accessed via controllerAs value in the directive,
             //
-            controllerAs: "mainCtrl"
+            controllerAs: "registrationFormCtrl"
         };
     });
 });
