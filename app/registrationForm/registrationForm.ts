@@ -1,13 +1,24 @@
 //
-define(['angular', "text!registrationForm.html", "formField"], function(angular, registrationFormHTML, formField) {
-    let listForm = angular.module('registrationForm', []);
-    // inject formField
-    listForm.directive("formField", formField);
-
-    // Directive represents html representation of the module
-    return listForm.directive("registrationForm", function () {
+import * as angular from 'angular';
+    export default function registrationForm() {
         return {
-            template: registrationFormHTML,
+            template: `<ng-form name="registrationForm">
+            <div class="form-field-container" ng-repeat="modelSync in models" ng-if="modelSync.formFieldVisibility" >
+            <label ng-cloak class="form-field">
+                <span class="form-field-caption">{{modelSync.formFieldCaption}}: </span>
+                <input class="form-field-input" form-field name="{{registrationFormCtrl.getFormFieldName($index)}}" type="text" ng-model="modelSync.formFieldTextDisplay"
+                       ng-required="true"
+                       ng-pattern="/[a-zA-Z0-9]+/"
+                       ng-change="handle.onChangeFormField(modelSync.formFieldTextDisplay, modelSync.formFieldName)"
+                       ng-minlength="2"
+                       placeholder="type name..."
+                       ng-class="{
+                       'form-field-forsaken': registrationForm[name].$invalid && registrationForm[name].$touched
+                       }"
+                />
+            </label>
+            </div>
+        </ng-form>`,
             restrict: "E",
             // defines controller which can be accessed by scope props
             // but also with this. methods which can be accessed when some child directive
@@ -57,7 +68,4 @@ define(['angular', "text!registrationForm.html", "formField"], function(angular,
             //
             controllerAs: "registrationFormCtrl"
         };
-    });
-});
-
-
+    }

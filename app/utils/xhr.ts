@@ -1,5 +1,4 @@
-define(['angular'], function(angular) {
-    return function () {
+    export default function XHR() {
         return {
             setRequestParams: function (method, url, requestHeaders, urlQueryParams, body, callbackSuccess, callbackFault) {
                 var xhr = new XMLHttpRequest();
@@ -153,4 +152,3 @@ define(['angular'], function(angular) {
             }
         }
     };
-});

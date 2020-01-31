@@ -1,6 +1,6 @@
-define([], function() {
-    return function() {
-        return {
+import * as angular from "angular";
+        export default function formField() {
+            return {
             restrict: "A",
             require: "ngModel",
             link: function (scope, element, attrs, modelCtrl) {
@@ -60,5 +60,4 @@ define([], function() {
             }
 
         };
-    }
-});
+}

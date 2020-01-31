@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "ES6",
+      "outDir": "./tsCompiled",
+      "sourceMap": true
+    },
+    "files": ["./main.ts"],
+    "include": ["./app/**/*"]
+}

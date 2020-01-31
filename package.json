@@ -1,16 +1,26 @@
 {
   "name": "monoDesire",
   "version": "1.0.0",
-  "description": "",
+  "description": "registration form based on angularjs with typescript, testing on jasmine",
+  "repository": "https://github.com/vlasJedi/testSome.git",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "node ./node_modules/typescript/bin/tsc",
+    "b": "node ./node_modules/webpack/bin/webpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.4.14",
+    "@types/angular": "^1.6.57",
+    "angular": "^1.7.9",
     "moment": "^2.24.0",
     "text": "github:requirejs/text"
+  },
+  "devDependencies": {
+    "jasmine": "^3.5.0",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }
