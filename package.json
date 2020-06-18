@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/angular": "^1.6.57",
-    "angular": "^1.7.9",
+    "angular": "^1.8.0",
     "moment": "^2.24.0",
     "text": "github:requirejs/text"
   },
